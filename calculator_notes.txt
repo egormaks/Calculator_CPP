@@ -1,0 +1,27 @@
+goal:
+	Create a calculator with an interactive GUI. The idea is that each
+	button on the calculator is pressed, and the corresponding value is
+	added onto the calculator's "screen". If the contents of the screen
+	is valid (a valid mathematical expression), pressing calculate will
+	output the value of the expression.
+
+	There will be 7 different operators:
+	+, -, *, /, %, ^, sqrt
+
+	A valid expression involves matching parenthesis, correct use of 
+	operators (a +-*/%^ b or sqrt(a))
+
+	PEMDAS needs to be followed.
+
+	project structure:
+		- one driver/main class
+		- one display class
+		- one button class
+		- one output window class
+
+	validity only needs to be checked once calculation is requested, not
+	dynamically.
+
+	clearing input and deleting one char at a time should be supported.
+	
+
