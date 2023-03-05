@@ -12,10 +12,20 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	main_layout->addWidget(textBrowser_, 1, 0);
 	setLayout(main_layout);
 	setWindowTitle(tr("Connecting buttons to process..."));
+
+	// connect button_'s released SIGNAL to the MainWidget's (this) slot method (onButtonReleased())
+	// basically, when button_ is released after a click, MainWidget's onButtonReleased() method will run
+	connect(button_, SIGNAL(released()), this, SLOT(onButtonRelease()));
 }
 
 MainWidget::~MainWidget() 
 {
 	delete button_;
 	delete textBrowser_;
+}
+
+void MainWidget::onButtonRelease()
+{
+	textBrowser_->clear();
+	textBrowser_->append(tr("Hello World!"));
 }
