@@ -3,6 +3,10 @@
 
 #include <QWidget>
 #include <QProcess>
+#include <list>
+#include <string>
+#include <iostream>
+using namespace std;
 
 class QPushButton;
 class QTextBrowser;
@@ -28,8 +32,11 @@ class MainWidget : public QWidget
 		// All the elements the MainWidget will contain.
 		// TODO: add the components of the calculator here.
 		QPushButton * button_;
+		QPushButton * enter_button_;
+		list<QPushButton *> calc_buttons_;
 		QTextBrowser * textBrowser_;
-		QProcess * process_;
+
+		void generateCalcButtons(list<QPushButton *> * buttons);
 };
 
 #endif
