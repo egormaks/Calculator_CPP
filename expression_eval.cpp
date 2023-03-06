@@ -24,7 +24,7 @@ int applyOp(int a, int b, char op){
  
 // Function that returns value of
 // expression after evaluation.
-int evaluate(string tokens){
+ extern int evaluate(string tokens){
     int i;
      
     // stack to store integer values.
@@ -36,7 +36,7 @@ int evaluate(string tokens){
     for(i = 0; i < tokens.length(); i++){     
         // Current token is an opening
         // brace, push it to 'ops'
-        else if(tokens[i] == '('){
+        if(tokens[i] == '('){
             ops.push(tokens[i]);
         }
          

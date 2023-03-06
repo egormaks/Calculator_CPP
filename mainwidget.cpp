@@ -1,5 +1,6 @@
 #include <QtWidgets>
 #include "mainwidget.h"
+#include "expression_eval.h"
 
 MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 {

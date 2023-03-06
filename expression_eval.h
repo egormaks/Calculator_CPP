@@ -2,10 +2,11 @@
 #define EXPRESSION_EVAL_H
 
 #include <stack>
+#include <string>
 using namespace std;
 
 int precedence(char op);
 int applyOp(int a, int b, char op);
-int evaluate(string tokens);
+extern int evaluate(string tokens);
 
 #endif
