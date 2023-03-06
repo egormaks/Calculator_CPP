@@ -6,6 +6,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "expression_eval.h"
 using namespace std;
 
 class QPushButton;
@@ -27,6 +28,7 @@ class MainWidget : public QWidget
 	private slots:
 		// Handler for button presses
 		void onButtonRelease();
+		void onEnterButtonRelease();
 
 	private:
 		// All the elements the MainWidget will contain.
@@ -37,6 +39,7 @@ class MainWidget : public QWidget
 		QPushButton * clear_button_;
 		list<QPushButton *> calc_buttons_;
 		QTextBrowser * textBrowser_;
+		string curr_expression_;
 
 		void generateCalcButtons(list<QPushButton *> * buttons);
 };

@@ -4,6 +4,7 @@
 MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 {
 	calc_buttons_ = {};
+	curr_expression_ = {};
 	generateCalcButtons(&calc_buttons_);
 	enter_button_ = new QPushButton(tr("Enter"));
 	del_button_ = new QPushButton(tr("Delete"));
@@ -21,7 +22,7 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	for (int i = 1; i < 3 && curr_button != calc_buttons_.end(); i++, curr_button++) { 
 		main_layout->addWidget(*curr_button, height, i);
 	}
-	height = height - 1;
+
 	while (curr_button != calc_buttons_.end()) { 
 		main_layout->addWidget(*curr_button, height, 4);
 		height--;
@@ -31,7 +32,7 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	for (curr_button = calc_buttons_.begin(); curr_button != calc_buttons_.end(); curr_button++) {
         	connect(*curr_button, SIGNAL(released()), this, SLOT(onButtonRelease()));
         }
-
+	connect(enter_button_, SIGNAL(released()), this, SLOT(onEnterButtonRelease()));
 	
 	textBrowser_->setFixedHeight(3 * 20);
 	main_layout->addWidget(textBrowser_, 0, 0, 2, 3);
@@ -53,11 +54,20 @@ MainWidget::~MainWidget()
 	}
 }
 
+void MainWidget::onEnterButtonRelease() 
+{
+	int res = evaluate(curr_expression_);
+	textBrowser_->clear();
+	textBrowser_->append(tr(to_string(res).c_str()));
+}
+
 void MainWidget::onButtonRelease()
 {
 	QPushButton * signaler = qobject_cast<QPushButton *>(sender());
+	string label = signaler->text().toStdString();
+	curr_expression_.append(label);
 	textBrowser_->clear();
-	textBrowser_->append(signaler->text());
+	textBrowser_->append(tr(curr_expression_.c_str()));
 }
 
 void MainWidget::generateCalcButtons(list<QPushButton *> * buttons) {
@@ -68,5 +78,6 @@ void MainWidget::generateCalcButtons(list<QPushButton *> * buttons) {
 	buttons->push_back(new QPushButton(tr("-")));
 	buttons->push_back(new QPushButton(tr("*")));
 	buttons->push_back(new QPushButton(tr("/")));
-	buttons->push_back(new QPushButton(tr("^")));
+	buttons->push_back(new QPushButton(tr("(")));
+	buttons->push_back(new QPushButton(tr(")")));
 }	
