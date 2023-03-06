@@ -33,6 +33,8 @@ class MainWidget : public QWidget
 		// TODO: add the components of the calculator here.
 		QPushButton * button_;
 		QPushButton * enter_button_;
+		QPushButton * del_button_;
+		QPushButton * clear_button_;
 		list<QPushButton *> calc_buttons_;
 		QTextBrowser * textBrowser_;
 
