@@ -60,8 +60,12 @@ MainWidget::~MainWidget()
 void MainWidget::onEnterButtonRelease() 
 {
 	textBrowser_->clear();
-	textBrowser_->append(tr("test, stored ans will be 99 for testing purposes."));
-	stored_ans_ = 99.0;
+	exprtk::expression<double> expression;
+	exprtk::parser<double> parser;
+	parser.compile(curr_expression_, expression);
+	double res = expression.value();
+	textBrowser_->append(tr(to_string(res).c_str()));
+	stored_ans_ = res;
 	prev_computed_ = true;
 }
 

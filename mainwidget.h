@@ -6,6 +6,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "exprtk.hpp"
 using namespace std;
 
 class QPushButton;
@@ -31,7 +32,6 @@ class MainWidget : public QWidget
 
 	private:
 		// All the elements the MainWidget will contain.
-		// TODO: add the components of the calculator here.
 		QPushButton * button_;
 		QPushButton * enter_button_;
 		QPushButton * del_button_;
