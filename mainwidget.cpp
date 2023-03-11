@@ -12,7 +12,7 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	enter_button_ = new QPushButton(tr("Enter"));
 	del_button_ = new QPushButton(tr("Delete"));
 	clear_button_ = new QPushButton(tr("Clear"));
-	textBrowser_ = new QTextBrowser();
+	text_browser_ = new QTextBrowser();
 
 	QGridLayout * main_layout = new QGridLayout;
 	int pos = 0;
@@ -39,8 +39,8 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	connect(clear_button_, SIGNAL(released()), this, SLOT(onClearButtonRelease()));
 	connect(del_button_, SIGNAL(released()), this, SLOT(onDeleteButtonRelease()));
 
-	textBrowser_->setFixedHeight(3 * 20);
-	main_layout->addWidget(textBrowser_, 0, 0, 2, 3);
+	text_browser_->setFixedHeight(3 * 20);
+	main_layout->addWidget(text_browser_, 0, 0, 2, 3);
 	main_layout->addWidget(enter_button_, 0, 4);
 	main_layout->addWidget(clear_button_, 1, 4);
 	main_layout->addWidget(del_button_, 2, 4);
@@ -50,7 +50,7 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 
 MainWidget::~MainWidget() 
 {
-	delete textBrowser_;
+	delete text_browser_;
 	delete enter_button_;
 	delete clear_button_;
 	delete del_button_;
@@ -61,15 +61,15 @@ MainWidget::~MainWidget()
 
 void MainWidget::onEnterButtonRelease() 
 {
-	textBrowser_->clear();
+	text_browser_->clear();
 	exprtk::expression<double> expression;
 	exprtk::parser<double> parser;
 	parser.compile(curr_expression_, expression);
         double res = expression.value();
         if (isnan(res)) {
-		textBrowser_->append(tr("Invalid input. Clear and try again."));
+		text_browser_->append(tr("Invalid input. Clear and try again."));
 	} else { 
-		textBrowser_->append(tr(to_string(res).c_str()));
+		text_browser_->append(tr(to_string(res).c_str()));
         	stored_ans_ = res;
         	prev_computed_ = true;
 	}
@@ -77,7 +77,7 @@ void MainWidget::onEnterButtonRelease()
 
 void MainWidget::onClearButtonRelease() 
 { 
-	textBrowser_->clear();
+	text_browser_->clear();
 	curr_expression_ = {};
 }
 
@@ -85,15 +85,15 @@ void MainWidget::onDeleteButtonRelease()
 {
 	if (curr_expression_.length() > 0) { 
 		curr_expression_ = curr_expression_.substr(0, curr_expression_.length() - 2);
-		textBrowser_->clear();
-		textBrowser_->append(tr(curr_expression_.c_str()));
+		text_browser_->clear();
+		text_browser_->append(tr(curr_expression_.c_str()));
 	}
 }
 
 void MainWidget::onButtonRelease()
 {
 	if (prev_computed_) {
-		textBrowser_->clear();
+		text_browser_->clear();
 		curr_expression_ = {};
 	}
 	QPushButton * signaler = qobject_cast<QPushButton *>(sender());
@@ -103,8 +103,8 @@ void MainWidget::onButtonRelease()
 	}
 	prev_computed_ = false;
 	curr_expression_.append(label + " ");
-	textBrowser_->clear();
-	textBrowser_->append(tr(curr_expression_.c_str()));
+	text_browser_->clear();
+	text_browser_->append(tr(curr_expression_.c_str()));
 }
 
 void MainWidget::generateCalcButtons(list<QPushButton *> * buttons) {

@@ -39,7 +39,7 @@ class MainWidget : public QWidget
 		QPushButton * del_button_;
 		QPushButton * clear_button_;
 		list<QPushButton *> calc_buttons_;
-		QTextBrowser * textBrowser_;
+		QTextBrowser * text_browser_;
 		string curr_expression_;
 		double stored_ans_;
 		bool prev_computed_;
