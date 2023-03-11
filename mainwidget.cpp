@@ -64,14 +64,14 @@ void MainWidget::onEnterButtonRelease()
 	textBrowser_->clear();
 	exprtk::expression<double> expression;
 	exprtk::parser<double> parser;
-	try {
-		parser.compile(curr_expression_, expression);
-		double res = expression.value();
+	parser.compile(curr_expression_, expression);
+        double res = expression.value();
+        if (isnan(res)) {
+		textBrowser_->append(tr("Invalid input. Clear and try again."));
+	} else { 
 		textBrowser_->append(tr(to_string(res).c_str()));
-		stored_ans_ = res;
-		prev_computed_ = true;
-	} catch (const exception& ex) {
-		textBrowser_->append("Error: invalid expr. Clear and try again");
+        	stored_ans_ = res;
+        	prev_computed_ = true;
 	}
 }
 
@@ -98,7 +98,7 @@ void MainWidget::onButtonRelease()
 	}
 	QPushButton * signaler = qobject_cast<QPushButton *>(sender());
 	string label = signaler->text().toStdString();
-	if (!isdigit(label[0]) && prev_computed_ && label[0] != '(') {
+	if (!isdigit(label[0]) && prev_computed_ && label[0] != '(' && label[0] != ')') {
 		label = to_string(stored_ans_) + " " + label;
 	}
 	prev_computed_ = false;
