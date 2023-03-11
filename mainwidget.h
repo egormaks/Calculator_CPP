@@ -6,6 +6,7 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "exprtk.hpp"
 using namespace std;
 
 class QPushButton;
@@ -27,15 +28,21 @@ class MainWidget : public QWidget
 	private slots:
 		// Handler for button presses
 		void onButtonRelease();
+		void onEnterButtonRelease();
+		void onClearButtonRelease();
+		void onDeleteButtonRelease();
 
 	private:
 		// All the elements the MainWidget will contain.
-		// TODO: add the components of the calculator here.
 		QPushButton * button_;
 		QPushButton * enter_button_;
+		QPushButton * del_button_;
+		QPushButton * clear_button_;
 		list<QPushButton *> calc_buttons_;
-		QTextBrowser * textBrowser_;
-
+		QTextBrowser * text_browser_;
+		string curr_expression_;
+		double stored_ans_;
+		bool prev_computed_;
 		void generateCalcButtons(list<QPushButton *> * buttons);
 };
 
