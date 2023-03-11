@@ -6,7 +6,6 @@
 #include <list>
 #include <string>
 #include <iostream>
-#include "expression_eval.h"
 using namespace std;
 
 class QPushButton;
@@ -40,7 +39,8 @@ class MainWidget : public QWidget
 		list<QPushButton *> calc_buttons_;
 		QTextBrowser * textBrowser_;
 		string curr_expression_;
-
+		double stored_ans_;
+		bool prev_computed_;
 		void generateCalcButtons(list<QPushButton *> * buttons);
 };
 

@@ -1,11 +1,13 @@
 #include <QtWidgets>
 #include "mainwidget.h"
-#include "expression_eval.h"
 
 MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 {
 	calc_buttons_ = {};
 	curr_expression_ = {};
+	stored_ans_ = {};
+	prev_computed_ = false;
+
 	generateCalcButtons(&calc_buttons_);
 	enter_button_ = new QPushButton(tr("Enter"));
 	del_button_ = new QPushButton(tr("Delete"));
@@ -57,16 +59,25 @@ MainWidget::~MainWidget()
 
 void MainWidget::onEnterButtonRelease() 
 {
-	int res = evaluate(curr_expression_);
 	textBrowser_->clear();
-	textBrowser_->append(tr(to_string(res).c_str()));
+	textBrowser_->append(tr("test, stored ans will be 99 for testing purposes."));
+	stored_ans_ = 99.0;
+	prev_computed_ = true;
 }
 
 void MainWidget::onButtonRelease()
 {
+	if (prev_computed_) {
+		textBrowser_->clear();
+		curr_expression_ = {};
+	}
 	QPushButton * signaler = qobject_cast<QPushButton *>(sender());
 	string label = signaler->text().toStdString();
-	curr_expression_.append(label);
+	if (!isdigit(label[0]) && prev_computed_ && label[0] != '(') {
+		label = to_string(stored_ans_) + " " + label;
+	}
+	prev_computed_ = false;
+	curr_expression_.append(label + " ");
 	textBrowser_->clear();
 	textBrowser_->append(tr(curr_expression_.c_str()));
 }
