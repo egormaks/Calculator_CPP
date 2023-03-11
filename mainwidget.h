@@ -29,6 +29,8 @@ class MainWidget : public QWidget
 		// Handler for button presses
 		void onButtonRelease();
 		void onEnterButtonRelease();
+		void onClearButtonRelease();
+		void onDeleteButtonRelease();
 
 	private:
 		// All the elements the MainWidget will contain.

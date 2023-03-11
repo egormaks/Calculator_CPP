@@ -36,7 +36,9 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
         	connect(*curr_button, SIGNAL(released()), this, SLOT(onButtonRelease()));
         }
 	connect(enter_button_, SIGNAL(released()), this, SLOT(onEnterButtonRelease()));
-	
+	connect(clear_button_, SIGNAL(released()), this, SLOT(onClearButtonRelease()));
+	connect(del_button_, SIGNAL(released()), this, SLOT(onDeleteButtonRelease()));
+
 	textBrowser_->setFixedHeight(3 * 20);
 	main_layout->addWidget(textBrowser_, 0, 0, 2, 3);
 	main_layout->addWidget(enter_button_, 0, 4);
@@ -62,11 +64,30 @@ void MainWidget::onEnterButtonRelease()
 	textBrowser_->clear();
 	exprtk::expression<double> expression;
 	exprtk::parser<double> parser;
-	parser.compile(curr_expression_, expression);
-	double res = expression.value();
-	textBrowser_->append(tr(to_string(res).c_str()));
-	stored_ans_ = res;
-	prev_computed_ = true;
+	try {
+		parser.compile(curr_expression_, expression);
+		double res = expression.value();
+		textBrowser_->append(tr(to_string(res).c_str()));
+		stored_ans_ = res;
+		prev_computed_ = true;
+	} catch (const exception& ex) {
+		textBrowser_->append("Error: invalid expr. Clear and try again");
+	}
+}
+
+void MainWidget::onClearButtonRelease() 
+{ 
+	textBrowser_->clear();
+	curr_expression_ = {};
+}
+
+void MainWidget::onDeleteButtonRelease() 
+{
+	if (curr_expression_.length() > 0) { 
+		curr_expression_ = curr_expression_.substr(0, curr_expression_.length() - 2);
+		textBrowser_->clear();
+		textBrowser_->append(tr(curr_expression_.c_str()));
+	}
 }
 
 void MainWidget::onButtonRelease()
