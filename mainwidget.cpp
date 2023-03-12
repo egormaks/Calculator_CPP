@@ -7,12 +7,7 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 	curr_expression_ = {};
 	stored_ans_ = {};
 	prev_computed_ = false;
-
 	generateCalcButtons(&calc_buttons_);
-	enter_button_ = new QPushButton(tr("Enter"));
-	del_button_ = new QPushButton(tr("Delete"));
-	clear_button_ = new QPushButton(tr("Clear"));
-	text_browser_ = new QTextBrowser();
 
 	QGridLayout * main_layout = new QGridLayout;
 	int pos = 0;
@@ -31,13 +26,6 @@ MainWidget::MainWidget(QWidget * parent) : QWidget(parent)
 		height--;
 		curr_button++;
 	}
-	
-	for (curr_button = calc_buttons_.begin(); curr_button != calc_buttons_.end(); curr_button++) {
-        	connect(*curr_button, SIGNAL(released()), this, SLOT(onButtonRelease()));
-        }
-	connect(enter_button_, SIGNAL(released()), this, SLOT(onEnterButtonRelease()));
-	connect(clear_button_, SIGNAL(released()), this, SLOT(onClearButtonRelease()));
-	connect(del_button_, SIGNAL(released()), this, SLOT(onDeleteButtonRelease()));
 
 	text_browser_->setFixedHeight(3 * 20);
 	main_layout->addWidget(text_browser_, 0, 0, 2, 3);
@@ -117,4 +105,16 @@ void MainWidget::generateCalcButtons(list<QPushButton *> * buttons) {
 	buttons->push_back(new QPushButton(tr("/")));
 	buttons->push_back(new QPushButton(tr("(")));
 	buttons->push_back(new QPushButton(tr(")")));
+
+        enter_button_ = new QPushButton(tr("Enter"));
+        del_button_ = new QPushButton(tr("Delete"));
+        clear_button_ = new QPushButton(tr("Clear"));
+        text_browser_ = new QTextBrowser();
+
+	for (auto curr_button = calc_buttons_.begin(); curr_button != calc_buttons_.end(); curr_button++) {
+                connect(*curr_button, SIGNAL(released()), this, SLOT(onButtonRelease()));
+        }
+        connect(enter_button_, SIGNAL(released()), this, SLOT(onEnterButtonRelease()));
+        connect(clear_button_, SIGNAL(released()), this, SLOT(onClearButtonRelease()));
+        connect(del_button_, SIGNAL(released()), this, SLOT(onDeleteButtonRelease()));
 }	
